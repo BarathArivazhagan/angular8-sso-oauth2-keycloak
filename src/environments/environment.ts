@@ -3,7 +3,22 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  sso: {
+    clientId : 'demo-app',
+    serverUrl: 'http://localhost:8080/auth/realms/master',
+    issuer :  '/oauth2/token',
+    redirectUri : window.location.origin + '/callback',
+    scope: 'openid profile',
+    tokenEndpoint:  '/protocol/openid-connect/token',
+    userinfoEndpoint:  '/protocol/openid-connect/userinfo',
+    authorizationEndpoint:  '/protocol/openid-connect/auth',
+    jwksEndpoint: '/protocol/openid-connect/certs',
+    showDebugInformation: true,
+    requireHttps: false,
+    responseType: 'id_token token'
+   
+  }
 };
 
 /*
