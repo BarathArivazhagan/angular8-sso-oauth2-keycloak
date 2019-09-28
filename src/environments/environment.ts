@@ -4,11 +4,10 @@
 
 export const environment = {
   production: false,
+  serverUrl: 'http://localhost:8080/auth/realms/master',
   sso: {
-    clientId : 'demo-app',
-    serverUrl: 'http://localhost:8080/auth/realms/master',
-    issuer :  '/oauth2/token',
-    redirectUri : window.location.origin + '/callback',
+    clientId : 'demo-app',    
+    redirectUri : window.location.origin + '/',
     scope: 'openid profile',
     tokenEndpoint:  '/protocol/openid-connect/token',
     userinfoEndpoint:  '/protocol/openid-connect/userinfo',
@@ -16,10 +15,30 @@ export const environment = {
     jwksEndpoint: '/protocol/openid-connect/certs',
     showDebugInformation: true,
     requireHttps: false,
-    responseType: 'id_token token'
+    responseType: 'id_token token',
+    logoutUrl: '/protocol/openid-connect/logout', 
+    clearHashAfterLogin: true,
+    jwks: {
+      keys: [
+        {
+          kid: "",
+          kty: "RSA",
+          alg: "RS256",
+          use: "sig",
+          n: "",
+          e: "AQAB",
+          x5c: [
+          ""
+          ],
+          x5t: "",
+          "x5t#S256": ""
+          }
+      ]
+      }
    
   }
 };
+// note: auth/realms/master/.well-known/openid-configuration  for retrieving the urls.
 
 /*
  * For easier debugging in development mode, you can import the following file

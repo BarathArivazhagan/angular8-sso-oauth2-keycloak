@@ -15,7 +15,7 @@ export class SSOService {
 
     this.oauthService.configure(authConfig);
     /** enable below validation only if jwks object is defined as part of oauthconfig obj */
-    // this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+    this.oauthService.tokenValidationHandler = new JwksValidationHandler();
     this.oauthService.setStorage(sessionStorage);
 
     /** commented below because below resource is protected by some identity server ex: wso2 */
@@ -24,7 +24,8 @@ export class SSOService {
     this.oauthService.tryLogin({});
   }
 
-  public obtainAccessToken() {
+  public initImplicitFlow() {
+    console.log('initialize the flow');
     this.oauthService.initImplicitFlow();
   }
 
@@ -39,13 +40,17 @@ export class SSOService {
   }
 
   public getUserInfo(): string {
-    const idToken =  this.oauthService.getIdToken();
-    console.log('id token ',idToken);
-    return typeof idToken['sub'] !== 'undefined' ? idToken['sub'].toString() : '';
+    const token =  this.oauthService.getAccessToken();
+    console.log('token ',token);
+    return typeof token['sub'] !== 'undefined' ? token['sub'].toString() : '';
   }
 
   public getAccessToken(): string {
     return this.oauthService.getAccessToken();
+  }
+
+  public getIdToken(): string {
+    return this.oauthService.getIdToken();
   }
 
   public getUserClaims(): object {

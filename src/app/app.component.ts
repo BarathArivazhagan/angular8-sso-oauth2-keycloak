@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { SSOService } from './oauth2/sso/sso.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,31 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular8-sso-oauth2';
+  isLoggedIn = false;
+  userName: string;
+
+  constructor(private ssoService: SSOService, private spinner: NgxSpinnerService) {}
+
+    ngOnInit() {
+        console.log('App component is initialized');
+        this.spinner.show();
+        this.isLoggedIn = this.ssoService.isLoggedIn();
+        console.log('isLoggedIn '+this.isLoggedIn);
+        if(!this.isLoggedIn) {
+          
+           //this.login();
+           this.ssoService.initImplicitFlow();
+           this.userName = this.ssoService.getUserName();
+        }
+       
+        this.spinner.hide();
+    }
+
+    // login() {
+    //     this.ssoService.obtainAccessToken();
+    // }
+
+    logout() {
+        this.ssoService.logout();
+    }
 }
